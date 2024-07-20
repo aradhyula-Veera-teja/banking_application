@@ -5,7 +5,7 @@
 1. React 18
 2. Material UI 5 for styling 
 3. **react-router** and **react-router-dom** for routing
-4.**formik** and **yup** for forms and form validation
+4. **formik** and **yup** for forms and form validation
 5. **react-query** for data caching and maintaining server state in UI
 6. **axios** for fetching the data 
 7. **vite** for package building
