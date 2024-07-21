@@ -1,12 +1,17 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import SignInForm from "../../components/forms/SignInForm/SignInForm";
-import building from "../../assets/building.jpg";
+// import building from "../../assets/building.jpg";
 
 export default function SingInPage() {
   return (
-    <Grid container sx={{ height: "100vh" }}>
-      <Grid
+    <Grid
+      container
+      sx={{ mt: 8 }}
+      justifyContent={"center"}
+      alignSelf={"center"}
+    >
+      {/* <Grid
         item
         xs={false}
         sm={4}
@@ -18,11 +23,11 @@ export default function SingInPage() {
           objectFit: "contain",
           backgroundPosition: "center",
         }}
-      />
+      /> */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            my: 8,
+            mt: 6,
             mx: 4,
             display: "flex",
             flexDirection: "column",

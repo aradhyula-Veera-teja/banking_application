@@ -21,7 +21,7 @@ function PieChartCard({ heading, pieChatData, onItemClickHandler }) {
           width={300}
           height={200}
           onItemClick={(event, d) => {
-            onItemClickHandler(pieChatData[d.dataIndex]);
+            onItemClickHandler(pieChatData[d.dataIndex], heading);
           }}
         />
       </CardContent>

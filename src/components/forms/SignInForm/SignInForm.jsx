@@ -1,7 +1,16 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Navigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import { Navigate, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import signInUser from "../../../API/ApiCalls/sigiInuser";
 
 const initialValues = {
   email: "",
@@ -18,12 +27,18 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function SignInForm() {
-
   const handleSignInSubmit = async (values) => {
-    console.log("Sign in form values", values);
-    sessionStorage.setItem("isLoggedIn", 1);
-    return <Navigate to={"/home"} />;
+    mutate(values);
   };
+
+  const navigate = useNavigate();
+
+  const { isLoading, isError, mutate } = useMutation(signInUser, {
+    onSuccess: (data) => {
+      sessionStorage.setItem("userEmail", data.email);
+      navigate("/home");
+    },
+  });
 
   return (
     <Formik
@@ -64,13 +79,15 @@ export default function SignInForm() {
             }
             label="Remember me"
           />
+          {isError && <Alert severity="error">Error message</Alert>}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled:isLoading
           >
-            Sign In
+            Sign In {isLoading && <CircularProgress />}
           </Button>
         </Form>
       )}

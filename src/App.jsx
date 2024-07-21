@@ -26,7 +26,13 @@ function App() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <AppBar sx={{ background: "white" }}>
+      <AppBar
+        sx={{
+          background: theme.palette.primary.main,
+          padding: "0 27px 0 22px !important",
+          height: "75px",
+        }}
+      >
         <Toolbar>
           <Box
             sx={{
@@ -34,13 +40,14 @@ function App() {
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
-              color: theme.palette.primary.main,
+              color: "white",
             }}
           >
-            <Typography>Banking application</Typography>
+            <Typography>LLOYDS BANK</Typography>
             <Stack direction={"row"} spacing={2}>
               <Button
                 variant="outlined"
+                color="secondary"
                 onClick={() => {
                   navigate("/home");
                 }}
@@ -99,7 +106,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Grid>
-        <Grid item sx={{ position: "fixed", bottom: 0, width: "100%" }}>
+        <Grid item sx={{ position: "sticky", bottom: "0" }}>
           <FixedFooter />
         </Grid>
       </Grid>

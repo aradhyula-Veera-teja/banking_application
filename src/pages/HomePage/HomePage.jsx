@@ -4,6 +4,7 @@ import {
   Box,
   Grid,
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +22,8 @@ import getExpenditure from "../../API/ApiCalls/getExpenditure";
 import getInvestments from "../../API/ApiCalls/getInvestments";
 import getInvestmentsTableData from "../../API/ApiCalls/getInvestmentsTableData";
 import TableLoader from "../../components/Loaders/TableLoader";
+import { useState } from "react";
+import StyledHeaderCell from "../../components/tableComponents/StyledHeaderCell";
 // import PieChartCard from "../../components/PieChart/PieChartCard";
 // import PieChartCardLoader from "../../components/PieChart/PieChartCardLoader";
 
@@ -58,10 +61,15 @@ export default function HomePage() {
     enabled: false,
     refetchOnWindowFocus: false,
   });
-  const pieChartItemClickHandler = (data) => {
+
+  const pieChartItemClickHandler = (data, heading) => {
     console.log("pieChartItemClickHandler", data);
+    setTableHeading(heading);
+    setSubTopic(data.label);
     tableRefetch();
   };
+  const [tableHeading, setTableHeading] = useState("demo label");
+  const [subTopic, setSubTopic] = useState("");
 
   return (
     <Box sx={{ p: 3 }}>
@@ -115,6 +123,22 @@ export default function HomePage() {
           </Grid>
         </Grid>
         <Grid item>
+          {(tableIsLoading || tableIsFetching) && (
+            <Skeleton
+              variant="rounded"
+              animation="wave"
+              width={200}
+              height={30}
+            />
+          )}
+          {tableIsSuccess && (
+            <Typography gutterBottom variant="h4">
+              {tableHeading} - {subTopic}
+            </Typography>
+          )}
+        </Grid>
+        {/* table start */}
+        <Grid item>
           {(tableIsFetching || tableIsLoading) && <TableLoader />}
           {tableIsError && (
             <Typography variant="h4" align="center">
@@ -122,24 +146,34 @@ export default function HomePage() {
             </Typography>
           )}
           {tableIsSuccess && (
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>LABEL</TableCell>
-                    <TableCell>VALUE</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tableData.data.map((item) => (
-                    <TableRow key={item.label}>
-                      <TableCell>{item.label}</TableCell>
-                      <TableCell>{item.value}</TableCell>
+            <>
+              <TableContainer
+                component={Paper}
+                elevation={6}
+                sx={{ maxHeight: 400 }}
+              >
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <StyledHeaderCell>LABEL</StyledHeaderCell>
+                      <StyledHeaderCell>VALUE</StyledHeaderCell>
+                      <StyledHeaderCell>xyz</StyledHeaderCell>
+                      <StyledHeaderCell>123</StyledHeaderCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {tableData.data.map((item) => (
+                      <TableRow key={item.label}>
+                        <TableCell>{item.label}</TableCell>
+                        <TableCell>{item.value}</TableCell>
+                        <TableCell>{item.x}</TableCell>
+                        <TableCell>{item.y}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
           )}
         </Grid>
       </Grid>
