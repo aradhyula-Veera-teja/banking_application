@@ -1,5 +1,3 @@
-// import {  } from "@mui/material";
-
 import {
   Box,
   Grid,
@@ -25,8 +23,6 @@ import TableLoader from "../../components/Loaders/TableLoader";
 import { useState } from "react";
 import StyledHeaderCell from "../../components/tableComponents/StyledHeaderCell";
 import TableNoData from "../../components/tableComponents/TableNoData";
-// import PieChartCard from "../../components/PieChart/PieChartCard";
-// import PieChartCardLoader from "../../components/PieChart/PieChartCardLoader";
 
 export default function HomePage() {
   const {
@@ -143,7 +139,8 @@ export default function HomePage() {
           )}
           {tableIsSuccess && (
             <Typography gutterBottom variant="h4">
-              {tableHeading} - {subTopic}
+              {sessionStorage.getItem("headingLabel")} -
+              {sessionStorage.getItem("subTopicLabel")}
             </Typography>
           )}
           {tableIsError && <TableNoData />}

@@ -4,7 +4,7 @@ import UserContext from "./UserContext";
 
 export default function UserContextProvider({ children }) {
   const initialValue = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     firstName: "firstName",
     lastName: "lastName",
     authToken: "",

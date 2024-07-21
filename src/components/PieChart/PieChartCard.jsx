@@ -21,6 +21,11 @@ function PieChartCard({ heading, pieChatData, onItemClickHandler }) {
           width={300}
           height={200}
           onItemClick={(event, d) => {
+            sessionStorage.setItem("headingLabel", heading);
+            sessionStorage.setItem(
+              "subTopicLabel",
+              pieChatData[d.dataIndex].label
+            );
             onItemClickHandler(pieChatData[d.dataIndex], heading);
           }}
         />

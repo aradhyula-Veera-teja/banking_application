@@ -16,44 +16,43 @@ import signInUser from "../../../API/ApiCalls/sigiInuser";
 import useUserContext from "../../../context/UserContext/useUserContext";
 
 const initialValues = {
-  email: "",
+  userId: "",
   password: "",
   rememberMe: false,
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Enter a valid Email")
-    .required("Email is required"),
+  userId: Yup.string().required("Email is required"),
   password: Yup.string().required("Password is required"),
   rememberMe: Yup.boolean(),
 });
 
 export default function SignInForm() {
-  const handleSignInSubmit = async (values) => {
-    mutate(values);
-  };
-  const { userData, setUserData } = useUserContext;
-
+  const { userData, setUserData } = useUserContext();
   const navigate = useNavigate();
 
   const { isLoading, isError, mutate, isSuccess } = useMutation(signInUser, {
     onSuccess: (data) => {
       // setUserData();
-      sessionStorage.setItem("userEmail", data.email);
+      sessionStorage.setItem("userEmail", data.userId);
       // navigate("/home");
     },
   });
 
+  const handleSignInSubmit = async (values) => {
+    mutate(values);
+  };
+
   if (isSuccess) {
-    // setUserData({
-    //   isLoggedIn: true,
-    //   firstName: "firstName",
-    //   lastName: "lastName",
-    //   authToken: "",
-    //   userElevation: "",
-    //   profileUrl: "",
-    // });
+    console.log("type of setUserData", setUserData);
+    setUserData({
+      isLoggedIn: true,
+      firstName: "firstName",
+      lastName: "lastName",
+      authToken: "",
+      userElevation: "",
+      profileUrl: "",
+    });
     navigate("/home");
   }
 
@@ -71,11 +70,11 @@ export default function SignInForm() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            helperText={<ErrorMessage name="email" />}
+            id="userId"
+            label="User ID"
+            name="userId"
+            autoComplete="userId"
+            helperText={<ErrorMessage name="userId" />}
             autoFocus
           />
           <Field
