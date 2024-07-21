@@ -18,11 +18,13 @@ import TableLoader from "../../components/Loaders/TableLoader";
 import getInvestmentsTableData from "../../API/ApiCalls/getInvestmentsTableData";
 import { useQuery } from "react-query";
 import SavingsIcon from "@mui/icons-material/Savings";
+import StyledHeaderCell from "../../components/tableComponents/StyledHeaderCell";
+import TableNoData from "../../components/tableComponents/TableNoData";
 
 export default function InvestPage() {
   const theme = useTheme();
   const { isFetching, isError, isLoading, data, isSuccess, refetch } = useQuery(
-    "InvestmentsTable",
+    "InvestmentsTable2",
     getInvestmentsTableData,
     {
       enabled: false,
@@ -31,13 +33,14 @@ export default function InvestPage() {
   );
   return (
     <Grid container sx={{ p: 3 }} flexDirection={"row"} spacing={4}>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2, mt: 3 }}>
           <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
             <SavingsIcon />
           </Avatar>
         </Box>
         <InvestForm
+          isLoading={isLoading}
           onSubmitHandler={() => {
             refetch();
           }}
@@ -45,11 +48,7 @@ export default function InvestPage() {
       </Grid>
       <Grid item flex={1}>
         {(isFetching || isLoading) && <TableLoader />}
-        {isError && (
-          <Typography variant="h4" align="center">
-            Some error while fetching details. Please try again later
-          </Typography>
-        )}
+        {isError && <TableNoData />}
         {isSuccess && (
           <TableContainer
             component={Paper}
@@ -59,7 +58,7 @@ export default function InvestPage() {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>LABEL</TableCell>
+                  <StyledHeaderCell>LABEL</StyledHeaderCell>
                   <TableCell>VALUE</TableCell>
                 </TableRow>
               </TableHead>

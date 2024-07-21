@@ -24,6 +24,7 @@ import getInvestmentsTableData from "../../API/ApiCalls/getInvestmentsTableData"
 import TableLoader from "../../components/Loaders/TableLoader";
 import { useState } from "react";
 import StyledHeaderCell from "../../components/tableComponents/StyledHeaderCell";
+import TableNoData from "../../components/tableComponents/TableNoData";
 // import PieChartCard from "../../components/PieChart/PieChartCard";
 // import PieChartCardLoader from "../../components/PieChart/PieChartCardLoader";
 
@@ -95,19 +96,6 @@ export default function HomePage() {
               )}
             </Grid>
             <Grid item>
-              {(ExpenditureIsFetching || ExpenditureIsLoading) && (
-                <PieChartCardLoader />
-              )}
-              {ExpenditureIsError && <PieChartNoData />}
-              {ExpenditureIsSuccess && (
-                <PieChartCard
-                  heading="Expenditure"
-                  pieChatData={ExpenditureData.data}
-                  onItemClickHandler={pieChartItemClickHandler}
-                />
-              )}
-            </Grid>
-            <Grid item>
               {(InvestmentsIsFetching || InvestmentsIsLoading) && (
                 <PieChartCardLoader />
               )}
@@ -120,31 +108,49 @@ export default function HomePage() {
                 />
               )}
             </Grid>
+            <Grid item>
+              {(ExpenditureIsFetching || ExpenditureIsLoading) && (
+                <PieChartCardLoader />
+              )}
+              {ExpenditureIsError && <PieChartNoData />}
+              {ExpenditureIsSuccess && (
+                <PieChartCard
+                  heading="Expenditure"
+                  pieChatData={ExpenditureData.data}
+                  onItemClickHandler={pieChartItemClickHandler}
+                />
+              )}
+            </Grid>
           </Grid>
         </Grid>
         <Grid item>
           {(tableIsLoading || tableIsFetching) && (
-            <Skeleton
-              variant="rounded"
-              animation="wave"
-              width={200}
-              height={30}
-            />
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Skeleton
+                variant="rounded"
+                animation="wave"
+                width={150}
+                height={30}
+              />{" "}
+              <Typography variant="h4">-</Typography>
+              <Skeleton
+                variant="rounded"
+                animation="wave"
+                width={150}
+                height={30}
+              />
+            </Box>
           )}
           {tableIsSuccess && (
             <Typography gutterBottom variant="h4">
               {tableHeading} - {subTopic}
             </Typography>
           )}
+          {tableIsError && <TableNoData />}
         </Grid>
         {/* table start */}
         <Grid item>
           {(tableIsFetching || tableIsLoading) && <TableLoader />}
-          {tableIsError && (
-            <Typography variant="h4" align="center">
-              Some error while fetching details. Please try again later
-            </Typography>
-          )}
           {tableIsSuccess && (
             <>
               <TableContainer

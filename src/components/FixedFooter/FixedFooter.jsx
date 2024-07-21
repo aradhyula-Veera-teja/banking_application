@@ -9,8 +9,8 @@ export default function FixedFooter() {
       sx={{
         background: theme.palette.primary.main,
         color: "white",
-        marginTop: "70px",
         padding: "12px",
+        mt: "auto",
       }}
     >
       <Toolbar>

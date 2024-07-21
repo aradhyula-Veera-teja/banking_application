@@ -1,7 +1,9 @@
 import { Navigate } from "react-router-dom";
+import useUserContext from "../../context/UserContext/useUserContext";
 
 export default function ProtectedRoute({ children }) {
-  if (sessionStorage.getItem("isLoggedIn") !== "1") {
+  const { userData } = useUserContext();
+  if (!userData.isLoggedIn) {
     return <Navigate to={"/"} replace />;
   }
   return children;

@@ -3,7 +3,6 @@ import {
   Avatar,
   Box,
   Button,
-  Grid,
   Stack,
   Toolbar,
   Typography,
@@ -19,13 +18,15 @@ import FixedFooter from "./components/FixedFooter/FixedFooter";
 import HomePage from "./pages/HomePage/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import InvestPage from "./pages/InvestPage/InvestPage";
+import useUserContext from "./context/UserContext/useUserContext";
 
 function App() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { userData } = useUserContext();
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <>
       <AppBar
         sx={{
           background: theme.palette.primary.main,
@@ -33,7 +34,7 @@ function App() {
           height: "75px",
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ pt: 2 }}>
           <Box
             sx={{
               display: "flex",
@@ -44,73 +45,75 @@ function App() {
             }}
           >
             <Typography>LLOYDS BANK</Typography>
-            <Stack direction={"row"} spacing={2}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => {
-                  navigate("/home");
-                }}
-              >
-                Home
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  navigate("/invest");
-                }}
-              >
-                Invest
-              </Button>
-              <Avatar sx={{}}></Avatar>
-            </Stack>
+            {userData.isLoggedIn && (
+              <Stack direction={"row"} spacing={2} alignContent={"center"}>
+                <Button
+                  variant="outlined"
+                  // color={theme.palette.common.white}
+                  sx={{ color: theme.palette.common.white }}
+                  onClick={() => {
+                    navigate("/home");
+                  }}
+                >
+                  Home
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={{ color: theme.palette.common.white }}
+                  // sx={{
+                  //   background: theme.palette.common.white,
+                  //   color: theme.palette.primary.main,
+                  //   ":hover": {
+                  //     background: theme.palette.common.white,
+                  //     opacity: "20%",
+                  //   },
+                  // }}
+                  onClick={() => {
+                    navigate("/invest");
+                  }}
+                >
+                  Invest
+                </Button>
+                <Avatar sx={{}}></Avatar>
+              </Stack>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <Grid container flexDirection={"column"} sx={{ flex: 1 }}>
-        <Grid>
-          <Routes>
-            <Route
-              path="/"
-              exact
-              element={
-                sessionStorage.getItem("isLoggedIn") === "1" ? (
-                  <HomePage />
-                ) : (
-                  <SingInPage />
-                )
-              }
-            />
-            <Route
-              path="/home"
-              exact
-              element={
-                <ProtectedRoute>
-                  <HomePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/invest"
-              exact
-              element={
-                <ProtectedRoute>
-                  <InvestPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/404" element={<NotFoundPage />} />
-            <Route path="/500" element={<ErrorPage />} />
-            <Route path="/maintenance" element={<MaintenancePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Grid>
-        <Grid item sx={{ position: "sticky", bottom: "0" }}>
-          <FixedFooter />
-        </Grid>
-      </Grid>
-    </Box>
+      <Box component={"section"} sx={{ minHeight: "100%", pb: 3 }}>
+        <Routes>
+          <Route path="/" exact element={<SingInPage />} />
+          {/* userData.isLoggedIn ? <HomePage /> : */}
+          <Route
+            path="/home"
+            exact
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invest"
+            exact
+            element={
+              <ProtectedRoute>
+                <InvestPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/404" element={<NotFoundPage />} />
+          <Route path="/500" element={<ErrorPage />} />
+          <Route path="/maintenance" element={<MaintenancePage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        {/* <Grid item sx={{ position: "sticky", bottom: "0" }}>
+          
+        </Grid> */}
+      </Box>
+      <FixedFooter />
+    </>
   );
 }
 

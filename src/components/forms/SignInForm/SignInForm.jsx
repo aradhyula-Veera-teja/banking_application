@@ -4,13 +4,16 @@ import {
   Checkbox,
   CircularProgress,
   FormControlLabel,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useMutation } from "react-query";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import signInUser from "../../../API/ApiCalls/sigiInuser";
+import useUserContext from "../../../context/UserContext/useUserContext";
 
 const initialValues = {
   email: "",
@@ -30,15 +33,29 @@ export default function SignInForm() {
   const handleSignInSubmit = async (values) => {
     mutate(values);
   };
+  const { userData, setUserData } = useUserContext;
 
   const navigate = useNavigate();
 
-  const { isLoading, isError, mutate } = useMutation(signInUser, {
+  const { isLoading, isError, mutate, isSuccess } = useMutation(signInUser, {
     onSuccess: (data) => {
+      // setUserData();
       sessionStorage.setItem("userEmail", data.email);
-      navigate("/home");
+      // navigate("/home");
     },
   });
+
+  if (isSuccess) {
+    // setUserData({
+    //   isLoggedIn: true,
+    //   firstName: "firstName",
+    //   lastName: "lastName",
+    //   authToken: "",
+    //   userElevation: "",
+    //   profileUrl: "",
+    // });
+    navigate("/home");
+  }
 
   return (
     <Formik
@@ -87,7 +104,10 @@ export default function SignInForm() {
             sx={{ mt: 3, mb: 2 }}
             disabled:isLoading
           >
-            Sign In {isLoading && <CircularProgress />}
+            <Stack direction={"row"} spacing={2} alignItems={"center"}>
+              <Typography>sign in</Typography>
+              {isLoading && <CircularProgress size={20} />}
+            </Stack>
           </Button>
         </Form>
       )}
