@@ -8,7 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   Avatar,
   useTheme,
 } from "@mui/material";
@@ -59,7 +58,7 @@ export default function InvestPage() {
               <TableHead>
                 <TableRow>
                   <StyledHeaderCell>LABEL</StyledHeaderCell>
-                  <TableCell>VALUE</TableCell>
+                  <StyledHeaderCell>VALUE</StyledHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
