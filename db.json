@@ -70,6 +70,77 @@
       "value": 25
     }
   ],
+  "bankwideexpenses": [
+    {
+      "id": "0",
+      "label": "Shopping",
+      "value": 25
+    },
+    {
+      "id": "2",
+      "label": "Entertainment",
+      "value": 25
+    },
+    {
+      "id": "3",
+      "label": "Food",
+      "value": 25
+    },
+    {
+      "id": "4",
+      "label": "Holiday",
+      "value": 25
+    }
+  ],
+  "bankwideinvestments": [
+    {
+      "id": "0",
+      "label": "Mutual Funds",
+      "value": 25
+    },
+    {
+      "id": "1",
+      "label": "Equity",
+      "value": 25
+    },
+    {
+      "id": "2",
+      "label": "SIP",
+      "value": 25
+    },
+    {
+      "id": "3",
+      "label": "Retirement Plan",
+      "value": 25
+    },
+    {
+      "id": "4",
+      "label": "Health",
+      "value": 25
+    },
+    {
+      "id": "5",
+      "label": "Term",
+      "value": 25
+    }
+  ],
+  "bankwideexpenditure": [
+    {
+      "id": "0",
+      "label": "Total Income ",
+      "value": 25
+    },
+    {
+      "id": "1",
+      "label": "Investments",
+      "value": 25
+    },
+    {
+      "id": "2",
+      "label": "Expenses",
+      "value": 25
+    }
+  ],
   "investmentstable": [
     {
       "label": "label1",
@@ -303,6 +374,24 @@
       "id": "f0e8",
       "userId": "1",
       "password": "asdadadsa231232323",
+      "rememberMe": false
+    },
+    {
+      "id": "ab5b",
+      "userId": "admin",
+      "password": "sfdsdf",
+      "rememberMe": false
+    },
+    {
+      "id": "4230",
+      "userId": "1",
+      "password": "sfdsfd",
+      "rememberMe": false
+    },
+    {
+      "id": "3afc",
+      "userId": "1",
+      "password": "sfsfd",
       "rememberMe": false
     }
   ]
