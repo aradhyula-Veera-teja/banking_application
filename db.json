@@ -393,6 +393,12 @@
       "userId": "1",
       "password": "sfsfd",
       "rememberMe": false
+    },
+    {
+      "id": "8924",
+      "userId": "admin",
+      "password": "asdfs",
+      "rememberMe": false
     }
   ]
 }

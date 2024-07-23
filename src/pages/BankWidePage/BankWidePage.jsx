@@ -87,6 +87,9 @@ export default function HomePage() {
       <Typography sx={{ pt: 1 }} variant="h4" gutterBottom align="center">
         Others page
       </Typography>
+      <Typography variant="body2" align="center">
+        Please sect the filters to see the data
+      </Typography>
       <Grid container flexDirection={"column"} gap={3}>
         <Grid item>
           <Grid container spacing={2} sx={{ mt: 1 }}>

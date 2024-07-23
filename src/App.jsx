@@ -107,7 +107,14 @@ function App() {
           <Route path="/404" element={<NotFoundPage />} />
           <Route path="/500" element={<ErrorPage />} />
           <Route path="/maintenance" element={<MaintenancePage />} />
-          <Route path="/others" element={<BankWidePage />} />
+          <Route
+            path="/others"
+            element={
+              <ProtectedRoute>
+                <BankWidePage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {/* <Grid item sx={{ position: "sticky", bottom: "0" }}>
