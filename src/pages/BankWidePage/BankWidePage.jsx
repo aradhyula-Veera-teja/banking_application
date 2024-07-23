@@ -93,15 +93,15 @@ export default function HomePage() {
       <Grid container flexDirection={"column"} gap={3}>
         <Grid item>
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <FormControl sx={{ width: "100%" }} fulWidth>
-                <InputLabel id="bankWideAgeFilter">Age</InputLabel>
+                <InputLabel id="bankWideAgeFilter">Category</InputLabel>
                 <Select
                   fullWidth
                   labelId="bankWideAgeFilter"
                   id="demo-simple-select"
                   value={age}
-                  label="Age"
+                  label="Category"
                   onChange={handleAgeChange}
                   disabled={
                     ExpensesIsFetching ||
@@ -112,38 +112,8 @@ export default function HomePage() {
                     InvestmentsIsLoading
                   }
                 >
-                  {ages.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl sx={{ width: "100%" }} fulWidth>
-                <InputLabel id="bankWideSalaryFilter">salary</InputLabel>
-                <Select
-                  fullWidth
-                  labelId="bankWideSalaryFilter"
-                  id="demo-simple-select"
-                  value={salary}
-                  label="salary"
-                  onChange={handleSalaryChange}
-                  disabled={
-                    ExpensesIsFetching ||
-                    ExpensesIsLoading ||
-                    ExpenditureIsFetching ||
-                    ExpenditureIsLoading ||
-                    InvestmentsIsFetching ||
-                    InvestmentsIsLoading
-                  }
-                >
-                  {salaries.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value="Age">Age</MenuItem>
+                  <MenuItem value="Salary">Salary</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
