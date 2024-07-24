@@ -52,7 +52,28 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
     }
   };
 
-  const onChangeHandler = (values) => {};
+  function estimateMonthlyInterest(P, n, FV) {
+    let r = 0; // Start with 0% interest
+    let increment = 0.000001; // Increment rate by 0.0001%
+    let maxR = 1; // 100% is the upper limit of interest rate to check
+    let tolerance = 1; // How close to the actual FV we need to be
+
+    // Function to calculate future value given a rate
+    function calculateFutureValue(P, r, n) {
+      return (P * ((1 + r) ** n - 1)) / r;
+    }
+
+    // Increase r until the calculated future value is close enough to FV
+    while (r < maxR) {
+      let calculatedFV = calculateFutureValue(P, r, n);
+      if (Math.abs(calculatedFV - FV) <= tolerance) {
+        return r;
+      }
+      r += increment;
+    }
+
+    return r;
+  }
 
   return (
     <Formik
@@ -110,10 +131,15 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
               // expectedReturn = (investment * term * rate) / 100;
               // rate = ((expectedReturn * 100) / investment) * term;
               // investment = (expectedReturn * 100) / (term * rate);
-              const rate =
-                (Number(props.values.expectedReturn) * 100) /
-                (Number(props.values.Investment) * Number(props.values.Term));
-              setSliderCount(rate);
+              // const rate =
+              //   (Number(props.values.expectedReturn) * 100) /
+              //   (Number(props.values.Investment) * Number(props.values.Term));
+              const rate = estimateMonthlyInterest(
+                props.values.Investment,
+                props.values.Term,
+                props.values.expectedReturn
+              );
+              setSliderCount((rate * 100).toFixed(2));
             }}
             helperText={<ErrorMessage name="Investment" />}
           />
