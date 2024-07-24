@@ -17,7 +17,8 @@ import { useState } from "react";
 const initialValues = {
   Purpose: "",
   Term: "",
-  Investment: "",
+  Investment: 14,
+  expectedReturn: "",
 };
 
 const validationSchema = Yup.object().shape({
@@ -25,6 +26,9 @@ const validationSchema = Yup.object().shape({
   Term: Yup.number("Term must be a number").required("Term is required"),
   Investment: Yup.number("Investment must be a number").required(
     "Investment is required"
+  ),
+  expectedReturn: Yup.number("Expected Return must be a number").required(
+    "Expected Return is required"
   ),
 });
 
@@ -42,11 +46,13 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
   }
   const handleBlur = () => {
     if (sliderCount < 0) {
-      setSliderCount(0);
+      setSliderCount(1);
     } else if (sliderCount > 200) {
       setSliderCount(200);
     }
   };
+
+  const onChangeHandler = (values) => {};
 
   return (
     <Formik
@@ -55,7 +61,7 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
       validationSchema={validationSchema}
       onSubmit={handleSignInSubmit}
     >
-      {() => (
+      {(props) => (
         <Form>
           <Field
             as={TextField}
@@ -76,7 +82,19 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
             name="Term"
             label="Term"
             id="Term"
+            type="number"
             helperText={<ErrorMessage name="Term" />}
+          />
+          <Field
+            as={TextField}
+            margin="normal"
+            required
+            fullWidth
+            name="expectedReturn"
+            label="Expected Return Amount"
+            id="expectedReturn"
+            type="number"
+            helperText={<ErrorMessage name="expectedReturn" />}
           />
           <Field
             as={TextField}
@@ -86,24 +104,29 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
             name="Investment"
             label="Investment Amount"
             id="Investment"
+            onChange={(e) => {
+              props.handleChange(e);
+              // si = ptr / 100
+              // expectedReturn = (investment * term * rate) / 100;
+              // rate = ((expectedReturn * 100) / investment) * term;
+              // investment = (expectedReturn * 100) / (term * rate);
+              const rate =
+                (Number(props.values.expectedReturn) * 100) /
+                (Number(props.values.Investment) * Number(props.values.Term));
+              setSliderCount(rate);
+            }}
             helperText={<ErrorMessage name="Investment" />}
           />
-          {/* <Field
-            as={TextField}
-            margin="normal"
-            required
-            fullWidth
-            name="Percentage"
-            label="Percentage of amount growth"
-            id="Percentage"
-            helperText={<ErrorMessage name="Percentage" />}
-            value={sliderCount}
-          /> */}
+
           <Typography>Percentage of amount growth</Typography>
           <Stack spacing={1} direction="row" alignItems={"center"}>
             <IconButton
               onClick={() => {
                 setSliderCount((present) => present - 1);
+                const investment =
+                  (Number(props.values.expectedReturn) * 100) /
+                  (Number(props.values.Term) * Number(sliderCount));
+                props.setFieldValue("Investment", Number(investment));
               }}
             >
               <RemoveIcon />
@@ -115,6 +138,11 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
               defaultValue={sliderCount}
               onChange={(event, newValue) => {
                 setSliderCount(newValue);
+                // investment =  (expectedReturn * 100 ) / (term * rate)
+                const investment =
+                  (Number(props.values.expectedReturn) * 100) /
+                  (Number(props.values.Term) * Number(newValue));
+                props.setFieldValue("Investment", Number(investment));
               }}
               min={1}
               max={200}
@@ -123,6 +151,10 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
             <IconButton
               onClick={() => {
                 setSliderCount((present) => present + 1);
+                const investment =
+                  (Number(props.values.expectedReturn) * 100) /
+                  (Number(props.values.Term) * Number(sliderCount));
+                props.setFieldValue("Investment", Number(investment));
               }}
             >
               <AddIcon />
@@ -132,15 +164,19 @@ export default function InvestForm({ isLoading, onSubmitHandler }) {
               size="small"
               onBlur={handleBlur}
               onChange={(event) => {
-                setSliderCount(Number(event.target.value));
+                if (Number(event.target.value) <= 0) {
+                  setSliderCount(Number(1));
+                  console.log("event.target.value");
+                } else if (Number(event.target.value) > 200) {
+                  setSliderCount(200);
+                } else {
+                  setSliderCount(Number(event.target.value));
+                }
+                const investment =
+                  (Number(props.values.expectedReturn) * 100) /
+                  (Number(props.values.Term) * Number(sliderCount));
+                props.setFieldValue("Investment", Number(investment));
               }}
-              // inputProps={{
-              //   step: 10,
-              //   min: 0,
-              //   max: 200,
-              //   type: "number",
-              //   "aria-labelledby": "input-slider",
-              // }}
             />
           </Stack>
 
