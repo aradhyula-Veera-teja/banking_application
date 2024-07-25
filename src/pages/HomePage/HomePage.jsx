@@ -69,7 +69,7 @@ export default function HomePage() {
   const [subTopic, setSubTopic] = useState("");
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, mt: 5 }}>
       <Grid container flexDirection={"column"} gap={3}>
         <Grid item>
           <Grid
@@ -104,7 +104,7 @@ export default function HomePage() {
                 />
               )}
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               {(ExpenditureIsFetching || ExpenditureIsLoading) && (
                 <PieChartCardLoader />
               )}
@@ -116,7 +116,7 @@ export default function HomePage() {
                   onItemClickHandler={pieChartItemClickHandler}
                 />
               )}
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Grid item>

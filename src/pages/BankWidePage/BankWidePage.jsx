@@ -93,8 +93,8 @@ export default function HomePage() {
       <Grid container flexDirection={"column"} gap={3}>
         <Grid item>
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={3}>
-              <FormControl sx={{ width: "100%" }} fulWidth>
+            <Grid item container justifyContent={"center"}>
+              <FormControl sx={{ width: "100%", maxWidth: "400px" }} fulWidth>
                 <InputLabel id="bankWideAgeFilter">Category</InputLabel>
                 <Select
                   fullWidth
@@ -153,21 +153,6 @@ export default function HomePage() {
                   <PieChartCard
                     heading="Investments"
                     pieChatData={InvestmentsData.data}
-                    onItemClickHandler={pieChartItemClickHandler}
-                  />
-                )}
-            </Grid>
-            <Grid item>
-              {(ExpenditureIsFetching || ExpenditureIsLoading) && (
-                <PieChartCardLoader />
-              )}
-              {ExpenditureIsError && <PieChartNoData />}
-              {!ExpenditureIsFetching &&
-                !ExpenditureIsLoading &&
-                ExpenditureIsSuccess && (
-                  <PieChartCard
-                    heading="Expenditure"
-                    pieChatData={ExpenditureData.data}
                     onItemClickHandler={pieChartItemClickHandler}
                   />
                 )}

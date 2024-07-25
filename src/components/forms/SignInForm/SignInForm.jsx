@@ -31,13 +31,16 @@ export default function SignInForm() {
   const { userData, setUserData } = useUserContext();
   const navigate = useNavigate();
 
-  const { isLoading, isError, mutate, isSuccess } = useMutation(signInUser, {
-    onSuccess: (data) => {
-      // setUserData();
-      sessionStorage.setItem("userEmail", data.userId);
-      // navigate("/home");
-    },
-  });
+  const { isLoading, isError, error, mutate, isSuccess } = useMutation(
+    signInUser,
+    {
+      onSuccess: (data) => {
+        // setUserData();
+        sessionStorage.setItem("userEmail", data.userId);
+        // navigate("/home");
+      },
+    }
+  );
 
   const handleSignInSubmit = async (values) => {
     mutate(values);
@@ -95,7 +98,7 @@ export default function SignInForm() {
             }
             label="Remember me"
           />
-          {isError && <Alert severity="error">Error message</Alert>}
+          {isError && <Alert severity="error">{error.message}</Alert>}
           <Button
             type="submit"
             fullWidth
